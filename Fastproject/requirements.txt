@@ -1,0 +1,18 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg[binary]
+pydantic[email]
+pydantic-settings
+alembic
+python-jose[cryptography]
+# ФІКС: Вказуємо конкретні версії для сумісності passlib та bcrypt
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+python-multipart
+fastapi-mail
+cloudinary
+redis
+# ФІКС: Версія 0.1.5 стабільна для імпорту "from fastapi_limiter import FastLimiter"
+fastapi_limiter==0.1.5
+python-dotenv

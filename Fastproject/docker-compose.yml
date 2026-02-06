@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: contacts_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "17477321" # Краще брати в лапки, щоб YAML не сприйняв як число
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      SQLALCHEMY_DATABASE_URL: postgresql+psycopg://postgres:17477321@db:5432/contacts_db
+      REDIS_HOST: redis
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  postgres_data:
